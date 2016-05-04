@@ -26,7 +26,7 @@ if ENV['AMS_VERSION'] == 'edge'
   require 'active_support/inflector'
 end
 
-%w(excon tilt sinatra sequel grape mongo moped mongoid active_model_serializers).each do |library|
+%w(excon tilt sinatra sequel grape mongo moped mongoid padrino active_model_serializers).each do |library|
   begin
     require library
     require "skylight/probes/#{library}"
