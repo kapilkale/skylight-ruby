@@ -2,16 +2,16 @@ require 'spec_helper'
 
 enable = false
 begin
-  require 'padrino'
+  require 'sinatra'
   require 'skylight'
   enable = true
 rescue LoadError
-  puts "[INFO] Skipping padrino integration specs"
+  puts "[INFO] Skipping sinatra integration specs"
 end
 
 if enable
 
-  describe 'Padrino integration' do
+  describe 'Sinatra integration' do
 
     let(:show_sinatra_classes) { false }
 
@@ -26,10 +26,10 @@ if enable
 
       Skylight.start!
 
-      class ::MyApp < Padrino::Application
+      class ::MyApp < Sinatra::Base
         use Skylight::Middleware
 
-        get :test do
+        get '/test' do
           Skylight.instrument category: 'app.inside' do
             Skylight.instrument category: 'app.zomg' do
               # nothing
@@ -66,7 +66,7 @@ if enable
         stub_session_request
       end
 
-      it 'successfully calls into padrino' do
+      it 'successfully calls into sinatra' do
         res = call env('/test')
         expect(res).to eq(["Hello!"])
 

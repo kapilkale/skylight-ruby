@@ -15,7 +15,13 @@ module Skylight
                   if instrumenter = Skylight::Instrumenter.instance
                     if trace = instrumenter.current_trace
                       # Set the endpoint name to the route name
-                      trace.endpoint = "#{@route.verb} #{@route.original_path}"
+                      name = [@route.verb, @route.original_path]
+
+                      if instrumenter.config.show_sinatra_classes?
+                        name.unshift(self.class.name)
+                      end
+
+                      trace.endpoint = name.join(' ')
                     end
                   end
                 end

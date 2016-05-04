@@ -42,6 +42,7 @@ module Skylight
       "IGNORED_ENDPOINT" => :'ignored_endpoint',
       "IGNORED_ENDPOINTS" => :'ignored_endpoints',
       "SEPARATE_FORMATS" => :'separate_formats',
+      "SHOW_SINATRA_CLASSES" => :'show_sinatra_classes',
 
       # == Skylight Remote ==
       "AUTH_URL"                     => :'auth_url',
@@ -95,6 +96,7 @@ module Skylight
       :'alert_log_file'       => '-'.freeze,
       :'log_sql_parse_errors' => false,
       :'separate_formats'     => false,
+      :'show_sinatra_classes' => false,
       :'hostname'             => Util::Hostname.default_hostname,
       :'heroku.dyno_info_path' => '/etc/heroku/dyno'
     }
@@ -527,6 +529,10 @@ authentication: #{self[:authentication]}
 
     def separate_formats?
       !!get(:separate_formats)
+    end
+
+    def show_sinatra_classes?
+      !!get(:show_sinatra_classes)
     end
 
   private
