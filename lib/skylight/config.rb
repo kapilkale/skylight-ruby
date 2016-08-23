@@ -45,6 +45,7 @@ module Skylight
       # == Instrumenter ==
       "IGNORED_ENDPOINT" => :ignored_endpoint,
       "IGNORED_ENDPOINTS" => :ignored_endpoints,
+      "WHITELISTED_ENDPOINTS" => :whitelisted_endpoints,
       "ENABLE_SEGMENTS" => :enable_segments,
 
       # == Skylight Remote ==
@@ -524,6 +525,20 @@ authentication: #{self[:authentication]}
           val = Array(get(:ignored_endpoint))
           val.concat(Array(ignored_endpoints))
           val
+        end
+    end
+
+    def whitelisted_endpoints
+      @whitelisted_endpoints ||=
+        begin
+          whitelisted_endpoints = get(:whitelisted_endpoints)
+
+          # If, for some odd reason you have a comma in your endpoint name, use the
+          # YML config instead.
+          if whitelisted_endpoints.is_a?(String)
+            whitelisted_endpoints = whitelisted_endpoints.split(/\s*,\s*/)
+          end
+          Array(whitelisted_endpoints)
         end
     end
 
